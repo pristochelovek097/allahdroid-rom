@@ -2,12 +2,12 @@
 set -e
 
 # ================== конфигурация ==================
-KERNEL_PATH=~/WilixDroid-KK-ARCHIVE/kernel-goldfish/arch/arm/boot/zImage
-SYSTEM_IMG=$HOME/WilixDroid-LP/out/target/product/generic/system.img
-USERDATA_IMG=$HOME/WilixDroid-LP/out/target/product/generic/userdata.img
-RAMDISK_IMG=$HOME/WilixDroid-LP/out/target/product/generic/ramdisk.img
-CACHE_IMG=$HOME/WilixDroid-LP/out/target/product/generic/cache.img
-DATA_IMG=$HOME/WilixDroid-LP/out/target/product/generic/userdata.img
+KERNEL_PATH=~/allahdroid/kernel-goldfish/arch/arm/boot/zImage
+SYSTEM_IMG=$HOME/allahdroid/out/target/product/generic/system.img
+USERDATA_IMG=$HOME/allahdroid/out/target/product/generic/userdata.img
+RAMDISK_IMG=$HOME/allahdroid/out/target/product/generic/ramdisk.img
+CACHE_IMG=$HOME/allahdroid/out/target/product/generic/cache.img
+DATA_IMG=$HOME/allahdroid/out/target/product/generic/userdata.img
 SDCARD_IMG=sdcard.img
 TARGET_SYSTEM_DIR=~/target_system
 TARGET_DATA_DIR=~/target_data
