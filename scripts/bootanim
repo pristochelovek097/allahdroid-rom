@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+set -e
+
+# функция для вывода справки
+usage() {
+    echo "Использование: $0 -part0 <файл> -part1 <файл> [-width <WIDTH>] [-height <HEIGHT>]"
+    echo "  -width, -height   Разрешение (по умолчанию: 1920x1080)"
+    exit 1
+}
+
+# проверка и установка ffmpeg, если нужно
+if ! command -v ffmpeg &> /dev/null; then
+    echo "установите ffmpeg"
+    exit 1
+fi
+
+# аргументы по умолчанию
+WIDTH=1920
+HEIGHT=1080
+PART0=""
+PART1=""
+
+# парсинг аргументов
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -part0) PART0="$2"; shift 2 ;;
+        -part1) PART1="$2"; shift 2 ;;
+        -width) WIDTH="$2"; shift 2 ;;
+        -height) HEIGHT="$2"; shift 2 ;;
+        *) echo "Неизвестный аргумент: $1"; usage ;;
+    esac
+done
+
+if [ -z "$PART0" ] || [ -z "$PART1" ]; then
+    echo "Нужно указать оба файла: -part0 и -part1"
+    usage
+fi
+
+for f in "$PART0" "$PART1"; do
+    if [ ! -f "$f" ]; then
+        echo "Файл не найден: $f"
+        exit 1
+    fi
+done
+
+echo "Генерирую bootanimation для разрешения ${WIDTH}x${HEIGHT}"
+
+WORK_DIR="$HOME/my_bootanim"
+rm -rf "$WORK_DIR"
+mkdir -p "$WORK_DIR/part0" "$WORK_DIR/part1"
+
+# нарезка кадров
+echo "Обработка part0..."
+ffmpeg -i "$PART0" -vf "scale=${WIDTH}:${HEIGHT}:flags=lanczos,fps=30" -pix_fmt rgb24 "$WORK_DIR/part0/%05d.png" -loglevel error -stats
+
+echo "Обработка part1..."
+ffmpeg -i "$PART1" -vf "scale=${WIDTH}:${HEIGHT}:flags=lanczos,fps=30" -pix_fmt rgb24 "$WORK_DIR/part1/%05d.png" -loglevel error -stats
+
+# генерация desc.txt
+cd "$WORK_DIR"
+cat > desc.txt <<EOF
+$WIDTH $HEIGHT 30
+p 1 0 part0
+p 0 0 part1
+
+EOF
+
+# упаковка
+zip -0Xqr bootanimation.zip desc.txt part0 part1
+
+echo "✅ готово: $WORK_DIR/bootanimation.zip"
