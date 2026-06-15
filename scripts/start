@@ -1,0 +1,139 @@
+#!/usr/bin/env bash
+set -e
+
+# ================== конфигурация ==================
+KERNEL_PATH=~/WilixDroid-KK-ARCHIVE/kernel-goldfish/arch/arm/boot/zImage
+SYSTEM_IMG=$HOME/WilixDroid-LP/out/target/product/generic/system.img
+USERDATA_IMG=$HOME/WilixDroid-LP/out/target/product/generic/userdata.img
+RAMDISK_IMG=$HOME/WilixDroid-LP/out/target/product/generic/ramdisk.img
+CACHE_IMG=$HOME/WilixDroid-LP/out/target/product/generic/cache.img
+DATA_IMG=$HOME/WilixDroid-LP/out/target/product/generic/userdata.img
+SDCARD_IMG=sdcard.img
+TARGET_SYSTEM_DIR=~/target_system
+TARGET_DATA_DIR=~/target_data
+
+MAKE_EXT4FS=./out/host/linux-x86/bin/make_ext4fs
+
+EMULATOR_CMD="./prebuilts/android-emulator/linux-x86_64/emulator"
+EMULATOR_OPTS="-kernel $KERNEL_PATH -memory 1024 -sysdir $HOME/WilixDroid-LP/out/target/product/generic -system $SYSTEM_IMG -ramdisk $RAMDISK_IMG -cache $CACHE_IMG -data $DATA_IMG -sdcard $SDCARD_IMG -gpu auto -scale 1.5 -show-kernel"
+
+# ================== функции ==================
+function mount_system() {
+    echo "[*] Монтируем $SYSTEM_IMG в $TARGET_SYSTEM_DIR"
+    mkdir -p "$TARGET_SYSTEM_DIR"
+    sudo mount -o loop,rw "$SYSTEM_IMG" "$TARGET_SYSTEM_DIR"
+}
+
+function unmount_system() {
+    echo "[*] Отмонтируем $TARGET_SYSTEM_DIR"
+    sudo umount "$TARGET_SYSTEM_DIR" 2>/dev/null || true
+}
+
+function mount_data() {
+    echo "[*] Монтируем $USERDATA_IMG в $TARGET_DATA_DIR"
+    mkdir -p "$TARGET_DATA_DIR"
+    sudo mount -o loop,rw "$USERDATA_IMG" "$TARGET_DATA_DIR"
+}
+
+function unmount_data() {
+    echo "[*] Отмонтируем $TARGET_DATA_DIR"
+    sudo umount "$TARGET_DATA_DIR" 2>/dev/null || true
+}
+
+function install_bootanim_to_system() {
+    mount_system
+    echo "[*] Копируем bootanimation.zip в /system/media"
+    sudo mkdir -p "$TARGET_SYSTEM_DIR/media"
+    sudo cp ~/my_bootanim/bootanimation.zip "$TARGET_SYSTEM_DIR/media/"
+    sudo chmod 644 "$TARGET_SYSTEM_DIR/media/bootanimation.zip"
+    unmount_system
+}
+
+function install_ringtone() {
+    mount_system
+    echo "[*] Копируем рингтон"
+    sudo mkdir -p "$TARGET_SYSTEM_DIR/media/audio/ringtones"
+    sudo cp ~/Music/Ring_Synth_04.ogg "$TARGET_SYSTEM_DIR/media/audio/ringtones/"
+    sudo chmod 644 "$TARGET_SYSTEM_DIR/media/audio/ringtones/Ring_Synth_04.ogg"
+    unmount_system
+}
+
+function recreate_data_cache() {
+    echo "[*] Удаляем старые образы userdata.img и cache.img"
+    rm -f "$DATA_IMG" "$CACHE_IMG"
+
+    echo "[*] Создаём новый userdata.img (200 МБ)"
+    $MAKE_EXT4FS -l 536870912 -a data "$DATA_IMG"   # 512 МБ
+
+    echo "[*] Создаём новый cache.img (66 МБ)"
+    $MAKE_EXT4FS -l 69206016 -a cache "$CACHE_IMG"
+
+    echo "[✓] Образы пересозданы"
+}
+
+function launch_emulator() {
+    echo "[*] Запускаем эмулятор"
+    $EMULATOR_CMD $EMULATOR_OPTS $@
+}
+
+# ================== парсинг аргументов ==================
+LAUNCH_AFTER_REASSEMBLY=false
+INTERACTIVE_SHELL=false
+EXTRA_EMU_ARGS=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -launch-after-reassembly)
+            LAUNCH_AFTER_REASSEMBLY=true
+            shift
+            ;;
+        -ls-in-systemimg)
+            INTERACTIVE_SHELL=true
+            shift
+            ;;
+        -ls-in-dataimg)
+            INTERACTIVE_DATA_SHELL=true
+            shift
+            ;;
+        -launch)
+            shift
+            launch_emulator $@
+            exit 0
+            ;;
+        --emulator=*)
+            EXTRA_EMU_ARGS="${1#*=}"
+            shift
+            ;;
+        *)
+            echo "Неизвестный флаг: $1"
+            exit 1
+            ;;
+    esac
+done
+
+# ================== логика скрипта ==================
+if [ "$INTERACTIVE_SHELL" = true ]; then
+    mount_system
+    echo "[*] Запуск интерактивной оболочки в $TARGET_SYSTEM_DIR. Введите 'exit' для завершения."
+    bash
+    unmount_system
+fi
+
+if [ "$INTERACTIVE_DATA_SHELL" = true ]; then
+    mount_data
+    echo "[*] Запуск интерактивной оболочки в $TARGET_DATA_DIR. Введите 'exit' для завершения."
+    bash
+    unmount_data
+fi
+
+if [ "$LAUNCH_AFTER_REASSEMBLY" = true ]; then
+    # пересоздаём data и cache
+    recreate_data_cache
+    
+    # Устанавливаем кастомы
+    install_bootanim_to_system
+    install_ringtone
+    
+    # запускаем эмулятор
+    launch_emulator $EXTRA_EMU_ARGS
+fi
