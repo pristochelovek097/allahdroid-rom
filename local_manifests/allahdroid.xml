@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+    <!-- build_id.mk (правки номера сборки) -->
+    <project path="build/core" name="build_core" revision="main">
+        <copyfile dest="build/core/build_id.mk" src="build/core/build_id.mk"/>
+    </project>
+
+    <!-- allah_arm.mk и AndroidProducts.mk -->
+    <project path="build/target/product" name="build_target_product" revision="main">
+        <copyfile dest="build/target/product/allah_arm.mk" src="build/target/product/allah_arm.mk"/>
+        <copyfile dest="build/target/product/AndroidProducts.mk" src="build/target/product/AndroidProducts.mk"/>
+    </project>
+
+    <!-- Обои (три размера) -->
+    <project path="frameworks/base/core/res/res/drawable-nodpi" name="frameworks_base_res_drawable" revision="main">
+        <copyfile dest="frameworks/base/core/res/res/drawable-nodpi/default_wallpaper.jpg" src="frameworks/base/core/res/res/drawable-nodpi/default_wallpaper.jpg"/>
+    </project>
+    <project path="frameworks/base/core/res/res/drawable-sw600dp-nodpi" name="frameworks_base_res_drawable_sw600" revision="main">
+        <copyfile dest="frameworks/base/core/res/res/drawable-sw600dp-nodpi/default_wallpaper.jpg" src="frameworks/base/core/res/res/drawable-sw600dp-nodpi/default_wallpaper.jpg"/>
+    </project>
+    <project path="frameworks/base/core/res/res/drawable-sw720dp-nodpi" name="frameworks_base_res_drawable_sw720" revision="main">
+        <copyfile dest="frameworks/base/core/res/res/drawable-sw720dp-nodpi/default_wallpaper.jpg" src="frameworks/base/core/res/res/drawable-sw720dp-nodpi/default_wallpaper.jpg"/>
+    </project>
+
+    <!-- Кастомный SetupWizard (Provision) – вся папка -->
+    <project path="packages/apps/Provision" name="Provision" revision="main"/>
+
+    <!-- Рингтон explosion.ogg -->
+    <project path="packages/apps/Settings/res/raw" name="Settings_raw" revision="main">
+        <copyfile dest="packages/apps/Settings/res/raw/explosion.ogg" src="packages/apps/Settings/res/raw/explosion.ogg"/>
+    </project>
+
+    <!-- Правки в DeviceInfoSettings.java -->
+    <project path="packages/apps/Settings/src/com/android/settings" name="Settings_src" revision="main">
+        <copyfile dest="packages/apps/Settings/src/com/android/settings/DeviceInfoSettings.java" src="packages/apps/Settings/src/com/android/settings/DeviceInfoSettings.java"/>
+    </project>
+
+    <!-- Правки в init.c (если есть) -->
+    <project path="system/core/init" name="system_core_init" revision="main">
+        <copyfile dest="system/core/init/init.c" src="system/core/init/init.c"/>
+    </project>
+</manifest>

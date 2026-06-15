@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- welcome -->
+    <string name="welcome_title">привет, еблан</string>
+    <string name="welcome_subtitle">добро пожаловать в самую ахуенную прошивку\nallah 1.488</string>
+    <string name="welcome_button">погнали</string>
+    <string name="welcome_icon">⚡</string>
+    
+    <!-- final -->
+    <string name="final_congrats">ура, эта хуйня завершилась</string>
+    <string name="final_sub">ты выжил, поздравляю</string>
+    <string name="final_button">закончить</string>
+    
+    <!-- default (пасхалка) -->
+    <string name="pasxalka_text">привет пошел нахуй.. а ой это же самая ахуенная прошивка allah 1.488</string>
+    <string name="button_text">жинка, дальше</string>
+    
+    <!-- для выбора языка -->
+    <string name="language_title">выбери язык</string>
+    <string name="skip_language">пропустить (оставить русский)</string>
+    
+    <!-- для datetime настройки -->
+    <string name="datetime_title">настройка времени</string>
+    <string name="date_label">дата</string>
+    <string name="time_label">время</string>
+    <string name="timezone_label">часовой пояс</string>
+    <string name="done_button">дальше</string>
+    <string name="timezone_picker_title">выбери часовой пояс</string>
+    <string name="done_toast">погнали</string>
+
+    <!-- device name -->
+    <string name="device_name_title">как назвать устройство</string>
+    <string name="device_name_subtitle">придумай имя для своего ебаната</string>
+    <string name="device_name_input_label">имя устройства</string>
+    <string name="device_name_hint">например, мой андроид</string>
+    <string name="random_name_button">рандом</string>
+    <string name="device_name_hint_text">можно использовать буквы, цифры и символы</string>
+    
+    <!-- для wifi настройки -->
+    <string name="wifi_title">выбери свой вайфай</string>
+    <string name="skip_button_text">и так сойдет, ебашить дальше</string>
+    <string name="scanning_text">сканирование</string>
+    <string name="scanning_message">ищем вайфаи...</string>
+    <string name="no_wifi_found">ничего не найдено, включи роутер</string>
+    <string name="scanning_placeholder">[сканирую...]</string>
+    <string name="wpa_security">[wpa/wpa2]</string>
+    <string name="wep_security">[wep]</string>
+    <string name="open_security">[open]</string>
+    <string name="password_hint">пароль</string>
+    <string name="connect_button">подключиться</string>
+    <string name="cancel_button">отмена</string>
+    <string name="password_empty_error">введи пароль</string>
+    <string name="connecting_toast">подключение к %s...</string>
+    <string name="add_network_failed">не удалось добавить сеть</string>
+    <string name="back_pressed_toast">нажми \"и так сойдет\"</string>
+    <string name="dialog_title_connect">подключение к %s</string>
+</resources>
