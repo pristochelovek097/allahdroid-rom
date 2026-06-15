@@ -192,14 +192,13 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
             }
         }
 
-        // ========== ПАСХАЛКА "ПРАШИВКА АЛЛАХ" ==========
+        // прошивка аллах
         Preference allahPref = new Preference(getActivity());
         allahPref.setTitle("прашивка олях allah 1.488 хахах");
         allahPref.setEnabled(true);
         allahPref.setSelectable(true);
         allahPref.setKey(KEY_ALLAH_FIRMWARE);
         getPreferenceScreen().addPreference(allahPref);
-        // =================================================
     }
 
     @Override
@@ -284,13 +283,13 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
                 mAllahClickCount = 0;
                 doAllahExplosion();
             }
-            // ==============================================================
+
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
     /**
-     * Создаёт полноэкранный взрыв со звуком.
+     * создаёт полноэкранный взрыв со звуком.
      */
     private void doAllahExplosion() {
         final Activity activity = getActivity();
@@ -317,12 +316,12 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
             Log.e(LOG_TAG, "Sound error: " + e.getMessage());
         }
 
-        // ВИБРАЦИЯ (без таймера, синхронный паттерн взрыва)
+        // бабах
         try {
             android.os.Vibrator v = (android.os.Vibrator) activity
                     .getSystemService(Context.VIBRATOR_SERVICE);
             if (v != null && v.hasVibrator()) {
-                // Паттерн: 0ms пауза, 100ms вибрация, 50ms пауза, 200ms, 50ms, 400ms
+                // паттерн: 0ms пауза, 100ms вибрация, 50ms пауза, 200ms, 50ms, 400ms
                 long[] pattern = { 0, 100, 50, 200, 50, 400 };
                 v.vibrate(pattern, -1); // -1 = не повторять
             }
@@ -361,7 +360,7 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
 
         wm.addView(explosionLayout, params);
 
-        // Анимация взрыва
+        // анимация взрыва
         try {
             Animation shake = AnimationUtils.loadAnimation(activity, android.R.anim.fade_in);
             shake.setDuration(600);
@@ -371,7 +370,7 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
             Log.e(LOG_TAG, "Animation error: " + e.getMessage());
         }
 
-        // Убрать взрыв через 2 секунды
+        // убрать взрыв через 2 секунды
         explosionLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
