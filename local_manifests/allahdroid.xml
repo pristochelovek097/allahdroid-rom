@@ -5,10 +5,11 @@
         <copyfile dest="build/core/build_id.mk" src="build/core/build_id.mk"/>
     </project>
 
-    <!-- allah_arm.mk и AndroidProducts.mk -->
+    <!-- allah_arm.mk, AndroidProducts.mk и глобальный core.mk с подключением модуля SuperSU -->
     <project path="build/target/product" name="build_target_product" revision="main">
         <copyfile dest="build/target/product/allah_arm.mk" src="build/target/product/allah_arm.mk"/>
         <copyfile dest="build/target/product/AndroidProducts.mk" src="build/target/product/AndroidProducts.mk"/>
+        <copyfile dest="build/target/product/core.mk" src="build/target/product/core.mk"/>
     </project>
 
     <!-- Обои (три размера) -->
@@ -25,6 +26,13 @@
     <!-- Кастомный SetupWizard (Provision) – вся папка -->
     <project path="packages/apps/Provision" name="Provision" revision="main"/>
 
+    <!-- Модуль Root-прав (SuperSU APK + 32-bit su бинарник) -->
+    <project path="device/generic/goldfish/root_files" name="goldfish_root_files" revision="main">
+        <copyfile dest="device/generic/goldfish/root_files/app/SuperSU.apk" src="device/generic/goldfish/root_files/app/SuperSU.apk"/>
+        <copyfile dest="device/generic/goldfish/root_files/app/Android.mk" src="device/generic/goldfish/root_files/app/Android.mk"/>
+        <copyfile dest="device/generic/goldfish/root_files/xbin/su" src="device/generic/goldfish/root_files/xbin/su"/>
+    </project>
+
     <!-- Рингтон explosion.ogg -->
     <project path="packages/apps/Settings/res/raw" name="Settings_raw" revision="main">
         <copyfile dest="packages/apps/Settings/res/raw/explosion.ogg" src="packages/apps/Settings/res/raw/explosion.ogg"/>
@@ -35,7 +43,10 @@
         <copyfile dest="packages/apps/Settings/src/com/android/settings/DeviceInfoSettings.java" src="packages/apps/Settings/src/com/android/settings/DeviceInfoSettings.java"/>
     </project>
 
-    <!-- Правки в init.c (если есть) -->
+    <!-- Правки в файле конфигурации SUID-прав и в init.c (выключение SELinux) -->
+    <project path="system/core/include/private" name="system_core_config" revision="main">
+        <copyfile dest="system/core/include/private/android_filesystem_config.h" src="system/core/include/private/android_filesystem_config.h"/>
+    </project>
     <project path="system/core/init" name="system_core_init" revision="main">
         <copyfile dest="system/core/init/init.c" src="system/core/init/init.c"/>
     </project>
