@@ -6,11 +6,13 @@
     </project>
 
     <!-- allah_arm.mk, AndroidProducts.mk и глобальный core.mk с подключением модуля SuperSU -->
-    <project path="build/target/product" name="build_target_product" revision="main">
-        <copyfile dest="build/target/product/allah_arm.mk" src="build/target/product/allah_arm.mk"/>
-        <copyfile dest="build/target/product/AndroidProducts.mk" src="build/target/product/AndroidProducts.mk"/>
-        <copyfile dest="build/target/product/core.mk" src="build/target/product/core.mk"/>
+    <project path="device/generic/goldfish/root_files" name="pristochelovek097/goldfish_root_files" remote="github" revision="main">
+        <copyfile dest="device/generic/goldfish/root_files/app/SuperSU.apk" src="app/SuperSU.apk"/>
+        <copyfile dest="device/generic/goldfish/root_files/app/Android.mk" src="app/Android.mk"/>
+        <copyfile dest="device/generic/goldfish/root_files/xbin/su" src="xbin/su"/>
+        <copyfile dest="device/generic/goldfish/root_files/xbin/Android.mk" src="xbin/Android.mk"/>
     </project>
+
 
     <!-- Обои (три размера) -->
     <project path="frameworks/base/core/res/res/drawable-nodpi" name="frameworks_base_res_drawable" revision="main">
