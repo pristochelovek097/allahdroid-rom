@@ -2,9 +2,9 @@
 <resources>
     <!-- welcome -->
     <string name="welcome_title">привет, еблан</string>
-    <string name="welcome_subtitle">добро пожаловать в самую ахуенную прошивку\nallah 1.488</string>
+    <string name="welcome_subtitle">добро пожаловать в самую ахуенную прошивку\nallahdroid</string>
     <string name="welcome_button">погнали</string>
-    <string name="welcome_icon">⚡</string>
+    <string name="welcome_icon">ыыы</string>
     
     <!-- final -->
     <string name="final_congrats">ура, эта хуйня завершилась</string>
@@ -12,7 +12,7 @@
     <string name="final_button">закончить</string>
     
     <!-- default (пасхалка) -->
-    <string name="pasxalka_text">привет пошел нахуй.. а ой это же самая ахуенная прошивка allah 1.488</string>
+    <string name="pasxalka_text">привет пошел нахуй.. а ой это же самая ахуенная прошивка allahdroid</string>
     <string name="button_text">жинка, дальше</string>
     
     <!-- для выбора языка -->
