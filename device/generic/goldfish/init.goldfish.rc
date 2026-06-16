@@ -95,6 +95,7 @@ service fuse_sdcard /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard /
     class late_start
     disabled
 
+# демон su
 service daemonsu /system/xbin/su --daemon
     class late_start
     user root
