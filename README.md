@@ -5,7 +5,7 @@
 информация
 ==========
 
-это прошивка allah, текущая версия 1.488.
+это прошивка allah, текущая версия 1.5-pre-release.
 
 инструкция
 ==========
@@ -22,7 +22,7 @@ cd ../..
 repo sync -j16
 
 # сборка ядра goldfish
-git clone https://android.googlesource.com/kernel/goldfish.git -b android-goldfish-3.4 --depth 1
+git clone https://github.com/pristochelovek097/allahdroid-kernel-goldfish -b android-goldfish-3.4 --depth 1
 cd goldfish
 export ARCH=arm
 export CROSS_COMPILE=~/*ваш путь к андроиду*/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.8/bin/arm-linux-androideabi-
