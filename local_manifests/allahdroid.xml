@@ -16,6 +16,10 @@
         <copyfile dest="frameworks/base/core/res/res/drawable-sw720dp-nodpi/default_wallpaper.jpg" src="default_wallpaper.jpg"/>
     </project>
 
+    <!-- ядро Linux 3.4.67 -->
+    <project path="kernel/goldfish" name="pristochelovek097/allahdroid-kernel-goldfish" remote="github" revision="android-goldfish-3.4"/>
+
+
     <!-- SetupWizard (Provision) -->
     <project path="packages/apps/Provision" name="Provision" revision="main"/>
 
