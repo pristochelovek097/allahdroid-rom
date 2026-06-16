@@ -58,6 +58,14 @@ function install_ringtone() {
     unmount_system
 }
 
+function renaming_SU() {
+    mount_system
+    echo "[*] переименовываем su_allah в su поверх системы..."
+    # переименуем su_allah в su
+    sudo mv -f "$TARGET_SYSTEM_DIR/xbin/su_allah" "$TARGET_SYSTEM_DIR/xbin/su" 2>/dev/null || true
+    unmount_system
+}
+
 function recreate_data_cache() {
     echo "[*] Удаляем старые образы userdata.img и cache.img"
     rm -f "$DATA_IMG" "$CACHE_IMG"
@@ -133,7 +141,10 @@ if [ "$LAUNCH_AFTER_REASSEMBLY" = true ]; then
     # Устанавливаем кастомы
     install_bootanim_to_system
     install_ringtone
-    
+
+    # переименовываем бинарник su_allah в su
+    renaming_SU
+
     # запускаем эмулятор
     launch_emulator $EXTRA_EMU_ARGS
 fi
