@@ -194,7 +194,7 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
 
         // прошивка аллах
         Preference allahPref = new Preference(getActivity());
-        allahPref.setTitle("прашивка олях allah 1.488 хахах");
+        allahPref.setTitle("прашивка олях allahdroid хахах");
         allahPref.setEnabled(true);
         allahPref.setSelectable(true);
         allahPref.setKey(KEY_ALLAH_FIRMWARE);
